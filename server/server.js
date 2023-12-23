@@ -2,11 +2,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const fs = require('fs').promises;
-
+const fs = require("fs").promises;
 const app = express();
-const PORT = 3000;
+const ngrok = require("@ngrok/ngrok");
+const readline = require("readline-sync");
+const { exec } = require("child_process");
+let link;
 
+const PORT = 3000;
+const ngrok_api = "2ZwcRoIcS8b7Y7xhrUyjl1acLE1_25YBwCAszjYPqTyYqugor";
+const apiKey = "VGdFUUF1Z3dDWkN5TFVrSWhkbXo";
 const JSON_FILE_PATH = "./server/salesEntries.json";
 
 // Serve static files from the 'public' directory
@@ -15,14 +20,13 @@ app.use(express.static(path.join(__dirname, "../public")));
 // Parse JSON bodies
 app.use(bodyParser.json());
 
-
 // Function to load sales entries from the JSON file
 async function loadData() {
   try {
-    const data = await fs.readFile(JSON_FILE_PATH, 'utf8');
+    const data = await fs.readFile(JSON_FILE_PATH, "utf8");
     return JSON.parse(data);
   } catch (error) {
-    console.error('Error reading data from file:', error);
+    console.error("Error reading data from file:", error);
     return { entries: [] };
   }
 }
@@ -31,10 +35,10 @@ async function loadData() {
 async function saveData(data) {
   try {
     const json = JSON.stringify(data, null, 2);
-    await fs.writeFile(JSON_FILE_PATH, json, 'utf8');
-    console.log('Data saved successfully.');
+    await fs.writeFile(JSON_FILE_PATH, json, "utf8");
+    console.log("Data saved successfully.");
   } catch (error) {
-    console.error('Error saving data to file:', error);
+    console.error("Error saving data to file:", error);
   }
 }
 
@@ -87,12 +91,12 @@ app.post("/submit", async (req, res) => {
     totalCost,
     paymentMode
   );
-   
+
   const data = await loadData();
   data.entries.push(entry);
-  await saveData(data); 
+  await saveData(data);
 
- // Save entries to the JSON file
+  // Save entries to the JSON file
   // console.log(`server entry:${salesEntries}`);
   // Respond with a success message or any relevant information
   res.json({ message: "Form submission successful" });
@@ -127,11 +131,63 @@ app.get("/api/sales-entries", async (req, res) => {
     res.json({ entries });
     //console.log(entries)
   } catch (error) {
-    console.error('Error loading sales entries:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error loading sales entries:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Get your endpoint online
+try {
+  async function ngrokConnect() {
+    await ngrok
+      .connect({ addr: 3000, authtoken: ngrok_api })
+      .then((listener) => {
+        console.log(`Ingress established at: ${listener.url()}`);
+        // Ask the user if they want to send the link via SMS
+        const userInput = readline.question(
+          "Do you want to send the external link out?:  \nType yes or no "
+        );
+
+        if (userInput == "yes") {
+          // SEND SMS
+          const recipients = [
+            "233207959898",
+            "233245185065",
+            "233269801816",
+            "233556830507",
+            "233272089304",
+          ];
+
+          const smsData = {
+            sender: "EvNails&Spa",
+            message: `Hello, the new link for accessing the Everything Nails sales input system is:\n http://localhost:${PORT}\n`,
+            recipients: recipients,
+          };
+
+          const smsConfig = {
+            method: "post",
+            url: "https://sms.arkesel.com/api/v2/sms/send",
+            headers: {
+              "api-key": apiKey,
+            },
+            data: smsData,
+          };
+
+          axios(smsConfig)
+            .then(function (response) {
+              console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+      });
+  }
+  ngrokConnect();
+} catch (error) {
+  console.log(error);
+}
