@@ -7,7 +7,8 @@ const app = express();
 const ngrok = require("@ngrok/ngrok");
 const readline = require("readline-sync");
 const { exec } = require("child_process");
-let link;
+const axios = require('axios');
+
 
 const PORT = 3000;
 const ngrok_api = "2ZwcRoIcS8b7Y7xhrUyjl1acLE1_25YBwCAszjYPqTyYqugor";
