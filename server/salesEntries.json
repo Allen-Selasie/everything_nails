@@ -1,0 +1,58 @@
+{
+  "entries": [
+    {
+      "receptionist": "Sandra",
+      "customerName": "Ama Mantey",
+      "phoneNumber": "+233507026266",
+      "services": [
+        "Pedicure"
+      ],
+      "totalCost": "866",
+      "paymentMode": "Cash"
+    },
+    {
+      "receptionist": "Portia",
+      "customerName": "Afua",
+      "phoneNumber": "0507026266",
+      "services": [
+        "Pedicure",
+        "Manicure"
+      ],
+      "totalCost": "567",
+      "paymentMode": "eCash"
+    },
+    {
+      "receptionist": "Allen Selasie Korbla Ametame",
+      "customerName": "Allen Selasie Korbla Ametame",
+      "phoneNumber": "0245554845",
+      "services": [
+        "Nails",
+        "Massage"
+      ],
+      "totalCost": "9667",
+      "paymentMode": "eCash"
+    },
+    {
+      "receptionist": "senyo",
+      "customerName": "senyo",
+      "phoneNumber": "0507747902",
+      "services": [
+        "Nails"
+      ],
+      "totalCost": "300",
+      "paymentMode": "Cash"
+    },
+    {
+      "receptionist": "Allen Selasie Korbla Ametame",
+      "customerName": "Allen Selasie Korbla Ametame",
+      "phoneNumber": "0507026266",
+      "services": [
+        "Nails",
+        "Lashes",
+        "Pedicure"
+      ],
+      "totalCost": "673",
+      "paymentMode": "eCash"
+    }
+  ]
+}

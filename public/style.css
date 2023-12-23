@@ -5,6 +5,29 @@ body {
     padding: 0;
     align-items: center;
 }
+  /* Navbar Styling */
+  nav {
+    background-color: #333;
+    overflow: hidden;
+  }
+
+  nav a {
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  #download-container {
+    padding: 16px;
+  }
 
 h2 {
     text-align: center;
@@ -101,13 +124,16 @@ button:hover {
     background-color: #45a049;
 }
 
-#entries {
+.entries {
     max-width: 800px;
     margin: 20px auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#admin_entries{
+    display: none;
 }
 
 table {
@@ -146,4 +172,77 @@ button#extractBtn {
 
 button#extractBtn:hover {
     background-color: #0b7dda;
+}
+
+
+/* Style the submit button */
+input[type="submit"] {
+    background-color: #4CAF50; /* Green background color */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding for better appearance */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    cursor: pointer; /* Add a pointer cursor on hover */
+}
+
+/* Center the submit button within its parent */
+.group {
+    text-align: center;
+}
+
+
+    /* Modal Styling */
+    #adminModal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+  
+      #adminModalContent {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+  
+      /* Close button styling */
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+  
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+
+      /* Add these styles for the navigation cards */
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-navigation{
+    display: flex;
+    flex-wrap: wrap;
 }

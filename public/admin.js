@@ -1,54 +1,65 @@
 // public/admin.js
 const adminTable = document.getElementById('admin-table');
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("/admin")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const adminAuth = sessionStorage.getItem("adminAuth");
+        if (!adminAuth) {
+            alert("You are not authenticated. Redirecting to the index page.");
+            window.location.href = "/index.html"; // Replace with the actual path
+          }
+        return response.json();
+      })
+      .then(data => {
+        // Handle the received data as needed
+        console.log(data.message);
+        // Render the admin table or perform other actions
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        // Handle errors more gracefully, e.g., show a user-friendly message
+       // alert("An error occurred while fetching data. Please try again later.");
+      });
+});
+
+/*
+
 // Function to display admin table
 function displayAdminTable() {
-    fetch('http://localhost:3000/api/sales-entries')
-    .then(response => response.json())
-    .then(data => {
-        // Check if admin is authenticated
-        if (data.authenticated) {
-            const entries = data.entries;
-            // Populate the admin table
-            entries.forEach(entry => {
-                const row = adminTable.insertRow(-1);
-                const keys = Object.keys(entry);
-                keys.forEach((key, index) => {
-                    const cell = row.insertCell(index);
-                    cell.textContent = entry[key];
-                });
-            });
-        } else {
-            alert('Admin not authenticated. Please log in.');
-            // Redirect to the login page
-            window.location.href = 'index.html';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-// Function to extract CSV from admin table
-function extractCSV() {
-    const csvContent = "data:text/csv;charset=utf-8," +
-        "Receptionist,Customer Name,Phone Number,Service Purchased,Total Cost (GHS),Payment Mode\n";
-
-    const rows = adminTable.rows;
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].cells;
-        const values = Array.from(cells).map(cell => cell.textContent).join(',');
-        csvContent += values + "\n";
-    }
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "admin_sales_entries.csv");
-    document.body.appendChild(link);
-
-    link.click();
-}
-
-// Call the displayAdminTable function when the admin page loads
-displayAdminTable();
+    // Fetch sales entries from the server
+    fetch('/api/sales-entries')
+      .then(response => response.json())
+      .then(data => {
+        const entries = data.entries;
+  
+        // Clear existing table rows
+        adminTable.innerHTML = '';
+  
+        // Create table header
+        const headerRow = adminTable.insertRow(0);
+        const headers = ['Receptionist', 'Customer Name', 'Phone Number', 'Service Purchased', 'Total Cost (GHS)', 'Payment Mode'];
+  
+        headers.forEach((header, index) => {
+          const cell = headerRow.insertCell(index);
+          cell.textContent = header;
+        });
+  
+        // Populate the table with entries
+        entries.forEach((entry, entryIndex) => {
+          const row = adminTable.insertRow(entryIndex + 1); // Start from row 1 to leave space for the header
+  
+          Object.values(entry).forEach((value, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = Array.isArray(value) ? value.join(', ') : value;
+          });
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching sales entries:', error);
+      });
+  }
+  */
