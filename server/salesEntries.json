@@ -1,3 +1,35 @@
 {
-  "entries": [ ]
+  "entries": [
+    {
+      "receptionist": "Edwina",
+      "customerName": "Angelina",
+      "phoneNumber": "0241497947",
+      "services": [
+        "Nails"
+      ],
+      "totalCost": "300",
+      "paymentMode": "eCash"
+    },
+    {
+      "receptionist": "Edwina",
+      "customerName": "Lois",
+      "phoneNumber": "0201262189",
+      "services": [
+        "Nails"
+      ],
+      "totalCost": "250",
+      "paymentMode": "eCash"
+    },
+    {
+      "receptionist": "Edwina",
+      "customerName": "Adelaide",
+      "phoneNumber": "0205897344",
+      "services": [
+        "Nails",
+        "Pedicure"
+      ],
+      "totalCost": "230",
+      "paymentMode": "eCash"
+    }
+  ]
 }
